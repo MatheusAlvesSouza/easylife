@@ -1,0 +1,33 @@
+hml, body {
+    margin: 0;
+    padding: 0;
+    background: #aaa;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    font-size: 25px;
+    font-weight: lighter;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+h2 {
+    font-size: 20px;
+    font-weight: bolder;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+hr {
+    border: solid 1px #ddd;
+}
+
+@media screen and (min-width: 720px)
+{
+    h1 {
+        font-size: 30px;
+    }
+
+    h2 {
+        font-size: 25px;
+    }
+}

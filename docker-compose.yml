@@ -1,0 +1,32 @@
+version: '3.2'
+
+services:
+  mongo:
+    image: "mongo:latest"
+    volumes:
+      - ./data/db
+    ports:
+      - "27017:27017"
+  easylife-back:
+    build:
+      context: easylife-back/
+    volumes:
+      - ./easylife-back:/src
+      - /easylife-back/node_modules
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mongo
+  easylife-app:
+    stdin_open: true
+    build:
+      context: easylife-app/
+    volumes:
+      - ./easylife-app:/src
+      - /easylife-app/node_modules
+    ports:
+      - "3000:3000"
+
+# networks:
+#   easylife:
+#     driver: bridge
