@@ -8,15 +8,15 @@ export default function Card(props) {
     
     const handleClick = (e) => {
         e.preventDefault();
-        history.push("/searchDetails/" + props.id);
+        history.push("/searchDetails/" + props.establishment._id);
     }
 
     return(
         <Wrapper onClick={handleClick}>
-            <Stars stars={props.stars} isReadOnly={true} hasTypography={false}/>
+            <Stars stars={props.establishment.estrelas} isReadOnly={true} hasTypography={false}/>
 
             <div  style={{ gridRowStart: 1,  gridRowEnd: 5, }} >
-                <img src={"/estabelecimento.jpg"} alt="alt para colocar" style={
+                <img src={props.establishment.fotos[0].url} alt={props.establishment.fotos[0].descricao} style={
                     {
                         objectFit: 'cover',
                         width: '100%',
@@ -27,15 +27,21 @@ export default function Card(props) {
             </div>
             <div 
                 style={{ textAlign:"left", fontWeight:"bold"}}>
-                    Hamburgueria Freddy's !!!
+                    {props.establishment.nomeFantasia}
             </div>
             <div 
                 style={{ textAlign:"left"}}>
-                    Junk Food - Fast Food
+                    {props.establishment.tipoEstabelecimento}
             </div>
             <div 
                 style={{ textAlign:"left"}}>
-                R. Fradique Coutinho, 1136 - Vila Madalena, São Paulo
+                {
+                `${props.establishment.endereco.logradouro}
+                ${props.establishment.endereco.numero},
+                ${props.establishment.endereco.bairro},
+                ${props.establishment.endereco.cidade} - SP
+                `
+                }
             </div>
         </Wrapper>
     )

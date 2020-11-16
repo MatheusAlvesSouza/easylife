@@ -25,7 +25,7 @@ export default function Favorite(props) {
     const [value, setValue] = React.useState(props.isFavorite);
 
     return (
-        <Box component="fieldset" mb={3} borderColor="transparent" className={classes.root}>
+        <Box key={props.isFavorite} component="fieldset" mb={3} borderColor="transparent" className={classes.root}>
             
             <Rating  className={classes.rating}
             size='large'

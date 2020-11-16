@@ -29,7 +29,10 @@ router.get("/favorito", async (req, res) => {
 
 router.post("/favorito", async (req, res) => {
     try {
-        const favorito = await favoritoService.Create(req.body)
+        const favorito = await favoritoService.Create({
+            proprietario: req.body.proprietarioId,
+            cliente: req.clienteId,
+        })
         
         res.status(200).send(favorito);
     } catch (e) {
@@ -37,11 +40,11 @@ router.post("/favorito", async (req, res) => {
     }
 });
 
-router.delete("/favorito/:id", async (req, res) => {
+router.delete("/favorito/:proprietarioId", async (req, res) => {
     try {
-        await favoritoService.Delete(req.params.id)
+        await favoritoService.Delete(req.params.proprietarioId, req.clienteId)
         
-        res.status(204);
+        res.status(204).send();
     } catch (e) {
         res.status(400).send({ message: e.message});
     }

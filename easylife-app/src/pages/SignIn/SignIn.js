@@ -32,13 +32,13 @@ export default class Login extends React.Component {
         this.setState({ hiddenLogin: true});
 
         const result = await SignInUser(this.email.value, this.password.value);
-
+        
         if(result.token) {
             login(result.token, result.accountInfo);
             this.props.history.push("/home");
         }
         else {
-            this.setState ({error: result.error});
+            this.setState ({error: result.message});
         }
         
         this.setState({ hiddenLogin: false});

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Stars from '~/components/Stars';
-import { Establishment, Favorites } from '~/mocky';
 import { Link } from 'react-router-dom';
 import Favorite from '~/components/Favorite';
 import { DefaultBackground, DefaultBox } from '~/css/styles';
@@ -11,45 +10,74 @@ import { Carousel } from 'react-responsive-carousel';
 
 import { Paragraph, MapsContent, CarouselContent } from './SearchDetails.style';
 
+import { FindEstablishmentById, AddFavorite, RemoveFavorite } from '~/services/management';
+
 
 const SearchDetails = (props) => {
-
     const id = props.match.params.id;
 
     const [establishment, setEstablishment] = useState({});
     const [isFavorite, setIsFavorite] = useState(null);
+    const [stars, setStars] = useState(null);
+    const [carouselContent, setCarouselContent] = useState(<div></div>);
     
     useEffect(() => {
-        const favorite = Favorites.estabelecimentos.find(x => x.id == id);
+        async function fetchData() {
+            const establishment = await FindEstablishmentById(id);
+    
+            setEstablishment(establishment);
+            setIsFavorite(establishment.isFavorite ? 1 : 0);
+            setStars(establishment.estrelas);
+            setCarouselContent(renderFotos(establishment.fotos ?? []));
+        }
 
-        setEstablishment(Establishment);
-        setIsFavorite((favorite == null) ? false : true);
-    }, [id]);
+        fetchData();
+    },[]);
 
     function handleGoogleMaps() {
         window.open(
-            `http://www.google.com/maps/place/${Establishment.latitude},${Establishment.longitude}`,
+            `http://www.google.com/maps/place/${establishment.endereco.latitude},${establishment.endereco.longitude}`,
             '_blank'
         );
     }
 
     function handleUber() {
-        const link = getDeepLink(Establishment.nomeFantasia, Establishment.latitude, Establishment.longitude);
+        const link = getDeepLink(establishment.nomeFantasia, establishment.latitude, establishment.longitude);
         window.open(link, '_blank');
     }
 
-    function handleFavorite() { }
+    async function handleFavorite(value) {
+        if(value == 1)
+            await AddFavorite(id);
+        else
+            await RemoveFavorite(id);
+     }
 
+    function renderFotos (fotos) {
+        let contents = []
+
+        for(let i=0; i< fotos.length; i++){
+            let foto = fotos[i];
+            contents.push(
+                <CarouselContent key={i}>
+                    <img src={foto.url} alt={foto.descricao} />
+                    <p className="legend">{foto.descricao}</p>
+                </CarouselContent>
+            );
+        }
+
+        return contents;
+    }
+    
     return (
         <DefaultBackground>
             <DefaultBox>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <h1 style={{ textAlign: 'left' }}>{establishment.nomeFantasia}</h1>
-                    
                     {
                         (isFavorite != null) 
                         ? <Favorite isFavorite={isFavorite} handle={handleFavorite} />
-                        : null
+                        : <div></div>
                     }
                     
                 </div>
@@ -58,21 +86,14 @@ const SearchDetails = (props) => {
                 <MapsContent />
                 <h1 style={{ textAlign: 'left' }}>Facilidades</h1>
                 <Paragraph>{establishment.facilidades}</Paragraph>
-                <Stars stars={establishment.estrelas} isReadOnly={true} hasTypography={false} />
-
-                <Carousel>
-                    <CarouselContent>
-                        <img src="/bullger.jpg" alt='Hamburguer' />
-                        <p className="legend">Hamburguer</p>
-                    </CarouselContent>
-                    <CarouselContent>
-                        <img src="/estabelecimento.jpg" alt='Estabelecimento' />
-                        <p className="legend">Estabelecimento</p>
-                    </CarouselContent>
-                    <CarouselContent>
-                        <img src="/estabelecimento2.jpg" alt='Estabelecimento' />
-                        <p className="legend">Estabelecimento</p>
-                    </CarouselContent>
+                {
+                    (stars != null)
+                    ? <Stars stars={stars} isReadOnly={true} hasTypography={false} />
+                    : <div></div>
+                }
+  
+                <Carousel showThumbs={false}>
+                    { carouselContent }
                 </Carousel>
 
                 <h1>Horário de Funcionamento</h1>

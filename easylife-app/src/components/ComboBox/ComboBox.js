@@ -5,15 +5,19 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 const accountInfo = getAccountInfo();
 
-export default function CheckboxLabels() {
+export default function CheckboxLabels(props) {
     const [state, setState] = React.useState({
         checkedFisica: accountInfo.cliente.deficiencias.includes(1),
         checkedAuditiva: accountInfo.cliente.deficiencias.includes(2),
         checkedVisual: accountInfo.cliente.deficiencias.includes(3),
     });
 
-    const handleChange = (event) => {
+    const handleChange =  (event) => {
         setState({ ...state, [event.target.name]: event.target.checked });
+
+        state[event.target.name] = event.target.checked;
+        
+        props.handle(state);
     };
 
     return (

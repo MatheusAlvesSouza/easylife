@@ -6,14 +6,14 @@ const FindByProprietarioId = (id) => {
 
 const Create = async (foto) => {
 
-    const foto = await models.Foto.create(foto);
+    const fotoDb = await models.Foto.create(foto);
 
     await models.Proprietario.updateOne(
         {_id: foto.proprietario},
-        { $push: { fotos: foto._id}}
+        { $push: { fotos: fotoDb._id}}
     );
 
-    return foto;
+    return fotoDb;
 }
 
 module.exports = { Create, FindByProprietarioId };

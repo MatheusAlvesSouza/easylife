@@ -12,6 +12,7 @@ services:
       context: easylife-back/
     volumes:
       - ./easylife-back:/src
+      - ./easylife-back/public/uploads:/app/public/uploads
       - /easylife-back/node_modules
     ports:
       - "3001:3001"
@@ -26,7 +27,3 @@ services:
       - /easylife-app/node_modules
     ports:
       - "3000:3000"
-
-# networks:
-#   easylife:
-#     driver: bridge

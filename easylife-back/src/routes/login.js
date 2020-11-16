@@ -10,8 +10,10 @@ router.post("/login", async (req, res) => {
     if(!usuario)
         res.status(400).send({message: "Email ou senha incorretos."});
 
+    var userJson = usuario.toJSON();
+
     res.status(200).send({
-        token: jwt.signInJWT(usuario.toJSON()._id),
+        token: jwt.signInJWT(userJson),
         accountInfo: usuario
     });
 });

@@ -19,3 +19,11 @@ export const get = path => fetch(BASE_URL + path,{
     method: 'GET',
     headers: getHeaders()
 });
+
+
+export const deleted = (path, customHeaders) => {
+    return fetch(BASE_URL + path, {
+      method: 'DELETE',
+      headers: customHeaders || getHeaders()
+    });
+}

@@ -5,7 +5,8 @@ const models = {
     Cliente: require('../models/cliente'),
     Favorito: require('../models/favorito'),
     Proprietario: require('../models/proprietario'),
-    Foto: require('../models/foto')
+    Foto: require('../models/foto'),
+    Avaliacao: require('../models/avaliacao')
 };
 
 const connect = () => {

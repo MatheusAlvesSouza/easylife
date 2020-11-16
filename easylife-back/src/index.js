@@ -4,6 +4,7 @@ const { connect } = require('./infrastructure/mongo');
 
 app.use('/', routes.login);
 app.use('/cliente', routes.cliente);
+app.use('/avaliacao', routes.avaliacao);
 app.use('/proprietario', routes.proprietario);
 
 app.get('/ping', async (req, res) => {
