@@ -53,7 +53,7 @@ export default function NavBar(props) {
     const handleLogout = (e) => {
         e.preventDefault();
         logout();
-        history.push("/");
+        history.go(0);
     }
 
     const handleGoBack = () => {
@@ -71,7 +71,7 @@ export default function NavBar(props) {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Minha Conta</MenuItem>
+            <MenuItem onClick={handleMenuClose}  style={{display: "none"}}>Minha Conta</MenuItem>
             <MenuItem onClick={handleLogout}>Sair</MenuItem>
         </Menu>
     );
@@ -87,7 +87,7 @@ export default function NavBar(props) {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem onClick={handleProfileMenuOpen}>
+            <MenuItem onClick={handleProfileMenuOpen}  style={{display: "none"}}>
                 <IconButton
                     aria-label="account of current user"
                     aria-controls="primary-search-account-menu"

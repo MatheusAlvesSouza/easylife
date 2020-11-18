@@ -1,7 +1,14 @@
 const { models } = require('../infrastructure/mongo');
 
 const FindByClienteId = (id) => {
-    return models.Favorito.find({cliente: id}).populate({path: 'proprietario', model: 'Proprietario'});
+    return models.Favorito.find({cliente: id})
+        .populate({path: 'proprietario', model: 'Proprietario'})
+        .exec((err, docs) => {
+            models.Foto.populate(docs, {
+                path: 'proprietario.fotos',
+                model: "Foto"
+              });
+        });
 }
 
 const FindByClienteIdAndProprietarioId = (cliente, proprietario) => {

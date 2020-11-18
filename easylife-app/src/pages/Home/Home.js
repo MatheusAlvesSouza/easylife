@@ -17,7 +17,7 @@ export default class Home extends React.Component {
     handleLogout = async (e) => {
         e.preventDefault();
         logout();
-        this.props.history.push("/");
+        this.props.history.go(0);
     }
     
     handleSearchInput = (value) => {
@@ -40,8 +40,8 @@ export default class Home extends React.Component {
                         <PrimaryButton>Buscar</PrimaryButton>
                     </Link>
 
-                    <PrimaryButton>Favoritos</PrimaryButton>
-                    <PrimaryButton>Meus Dados</PrimaryButton>
+                    <PrimaryButton style={{display: "none"}}>Favoritos</PrimaryButton>
+                    <PrimaryButton  style={{display: "none"}} >Meus Dados</PrimaryButton>
                     <SecundaryButton onClick={this.handleLogout}>Sair</SecundaryButton>
                 </DefaultBox>
             </DefaultBackground>

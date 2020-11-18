@@ -72,7 +72,7 @@ export default class Login extends React.Component {
                         : <PrimaryButton>Entrar</PrimaryButton>
                     } 
 
-                    <Link to="signUp" style={{ textDecoration: 'none' }}>
+                    <Link to="signUp" style={{ textDecoration: 'none', display: 'none' }}>
                         <SecundaryButton>Cadastrar</SecundaryButton>
                     </Link>
                     </form>
